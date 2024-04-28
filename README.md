@@ -21,24 +21,8 @@ Welcome to MyFlix, a web application built with React that allows users to explo
 - Hosted online for accessibility.
 
 ## Project Structure
-src/
-|-- components/
-| |-- MainView.js
-| |-- SingleMovieView.js
-| |-- LoginView.js
-| |-- SignupView.js
-| |-- ProfileView.js
-| |-- ...
-|-- services/
-| |-- authService.js
-| |-- movieService.js
-| |-- userService.js
-|-- redux/
-| |-- actions/
-| |-- reducers/
-| |-- store.js
-|-- App.js
-|-- index.js
+
+
 
 
 ## Dependencies
