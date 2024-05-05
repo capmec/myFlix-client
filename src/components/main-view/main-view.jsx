@@ -15,10 +15,10 @@ export const MainView = () => {
 						id: movie._id,
 						title: movie.title,
 						year: movie.year,
-						genre: movie.genre.name,
+						genre: movie.genre,
 						director: movie.director.name,
 						//how do I get the actors to display?
-						actors: movie.actors.map((actor) => actor.name).join(', '),
+						actors: movie.actors,
 
 						image: movie.image,
 					}
