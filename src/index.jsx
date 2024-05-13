@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 //Import statement to indicate that you need to bundle the CSS file `./index.sccs` into the final bundle
 import './index.scss'

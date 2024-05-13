@@ -1,5 +1,88 @@
-$color: steel-blue;
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
 
-.my-flix {
-	color: $color;
+body {
+	font-family: 'Roboto', sans-serif;
+	background: #f5f5f5;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+}
+
+.wrapper {
+	position: fixed;
+	width: 480px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.wrapper form {
+	width: 24rem;
+	max-width: 90%;
+	z-index: 1;
+	animation: showSignInForm 1s;
+}
+
+.form-label {
+	font-size: 16px;
+	font-weight: 500;
+}
+//spacing between the label and the icon
+.form-label i {
+	margin-right: 10px;
+}
+
+.icon {
+	padding-right: 5px;
+	font-size: larger;
+}
+
+.title {
+	font-size: 36px;
+	text-align: center;
+	margin-bottom: 1rem;
+	font-weight: 500;
+}
+
+.thumbnail {
+	border: 0;
+}
+
+.btn-primary {
+	width: 100%;
+	padding: 12px;
+	margin-top: 1rem;
+	color: white;
+	background-color: #dd003f !important;
+	border-color: #dd003f !important;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+@keyframes showSignInForm {
+	0%,
+	30% {
+		transform: translate(0, -150%);
+	}
+	70%,
+	90% {
+		transform: translate(0, 1rem);
+	}
+	80%,
+	100% {
+		transform: translate(0, 0);
+	}
+}
+
+.back-button {
+	padding: 4px 12px 4px 12px;
+	color: whitesmoke;
+	background-color: dodgerblue;
+	border: none;
+	border-radius: 4px;
 }
