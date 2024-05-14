@@ -4,13 +4,14 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 //Import statement to indicate that you need to bundle the CSS file `./index.sccs` into the final bundle
 import './index.scss'
 import { MainView } from './components/main-view/main-view'
+import { Container, Navbar } from 'react-bootstrap'
 
 //Main component (will eventually use all the others)
 const MyFlixApplication = () => {
 	return (
-		<div className='my-flix'>
+		<Container>
 			<MainView />
-		</div>
+		</Container>
 	)
 }
 
