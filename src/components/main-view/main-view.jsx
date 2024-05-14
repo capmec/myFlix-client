@@ -51,7 +51,7 @@ export const MainView = () => {
 			) : movies.length === 0 ? (
 				<div>The list is empty!</div>
 			) : (
-				<>
+				<Row>
 					{movies.map((movie) => (
 						<Col className='mb-5' md={3} key={movie.id}>
 							<MovieCard
@@ -71,7 +71,7 @@ export const MainView = () => {
 						}}>
 						Logout
 					</Button>
-				</>
+				</Row>
 			)}
 		</>
 	)
