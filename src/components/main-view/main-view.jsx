@@ -42,14 +42,12 @@ export const MainView = () => {
 	if (!user) {
 		return (
 			<>
-				{/* make the LoginView deactivate and the SignupView active */}
-				<SignupView />
-				{/* <LoginView
+				<LoginView
 					onLoggedIn={(user, token) => {
 						setUser(user)
 						setToken(token)
 					}}
-				/> */}
+				/>
 			</>
 		)
 	}

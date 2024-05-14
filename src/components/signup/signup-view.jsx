@@ -3,6 +3,7 @@ import { Button, Form } from 'react-bootstrap'
 import logo from '../../../public/logo.png'
 import { FaKey, FaUserAstronaut, FaBirthdayCake } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
+import { LoginView } from '../login-view/login-view'
 
 export const SignupView = () => {
 	const [username, setUsername] = useState('')
@@ -48,56 +49,63 @@ export const SignupView = () => {
 
 	return (
 		<div className='wrapper'>
-			<Form className='shadow p-4 bg-white rounded' onSubmit={handleSubmit}>
-				<img src={logo} alt='logo' className='thumbnail mx-auto d-block mb-lg-4' />
-				<div className='title'>{action}</div>
-				<Form.Group className='mb-2' controlId='formUsername'>
-					<Form.Label>
-						<FaUserAstronaut className='icon' />
-						Username
-					</Form.Label>
-					<Form.Control
-						type='text'
-						minLength={3}
-						value={username}
-						onChange={(e) => setUsername(e.target.value)}
-						required
-					/>
-				</Form.Group>
-				<Form.Group className='mb-2' controlId='formPassword'>
-					<Form.Label>
-						{' '}
-						<FaKey className='icon' />
-						Password
-					</Form.Label>
-					<Form.Control type='password' value={password} onChange={(e) => setPassword(e.target.value)} required />
-				</Form.Group>
+			{action === 'Register' ? (
+				<Form className='shadow p-4 bg-white rounded' onSubmit={handleSubmit}>
+					<img src={logo} alt='logo' className='thumbnail mx-auto d-block mb-lg-4' />
+					<div className='title'>{action}</div>
+					<Form.Group className='mb-2' controlId='formUsername'>
+						<Form.Label>
+							<FaUserAstronaut className='icon' />
+							Username
+						</Form.Label>
+						<Form.Control
+							type='text'
+							minLength={3}
+							value={username}
+							onChange={(e) => setUsername(e.target.value)}
+							required
+						/>
+					</Form.Group>
+					<Form.Group className='mb-2' controlId='formPassword'>
+						<Form.Label>
+							{' '}
+							<FaKey className='icon' />
+							Password
+						</Form.Label>
+						<Form.Control type='password' value={password} onChange={(e) => setPassword(e.target.value)} required />
+					</Form.Group>
 
-				<Form.Group className='mb-2' controlId='formEmail'>
-					<Form.Label className='mt-2'>
-						<MdEmail className='icon' />
-						Email
-					</Form.Label>
-					<Form.Control type='email' value={email} onChange={(e) => setEmail(e.target.value)} required />
-				</Form.Group>
-				<Form.Group className='mb-2' controlId='formBirthday'>
-					<Form.Label className='mt-2'>
-						{' '}
-						<FaBirthdayCake className='icon' /> Birthday
-					</Form.Label>
-					<Form.Control type='date' value={birthday} onChange={(e) => setBirthday(e.target.value)} required />
-				</Form.Group>
+					<Form.Group className='mb-2' controlId='formEmail'>
+						<Form.Label className='mt-2'>
+							<MdEmail className='icon' />
+							Email
+						</Form.Label>
+						<Form.Control type='email' value={email} onChange={(e) => setEmail(e.target.value)} required />
+					</Form.Group>
+					<Form.Group className='mb-2' controlId='formBirthday'>
+						<Form.Label className='mt-2'>
+							{' '}
+							<FaBirthdayCake className='icon' /> Birthday
+						</Form.Label>
+						<Form.Control type='date' value={birthday} onChange={(e) => setBirthday(e.target.value)} required />
+					</Form.Group>
 
-				<Button className='w-100' variant='primary' type='submit'>
-					Register
-				</Button>
-
-				<div className='d-grid justify-content-end'>
-					<Button className='text-muted px-0' variant='link' type='submit'>
+					<Button className='w-100' variant='primary' type='submit'>
 						Register
 					</Button>
+
+					<div className='d-grid justify-content-end'>
+						{/* when the button is clicked show the <LoginView/> */}
+						<Button className='text-muted px-0' variant='link' onClick={() => setAction('Login')}>
+							Login
+						</Button>
+					</div>
+				</Form>
+			) : (
+				<div>
+					<LoginView />
 				</div>
-			</Form>
+			)}
 		</div>
 	)
 }
