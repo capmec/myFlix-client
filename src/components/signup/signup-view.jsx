@@ -9,6 +9,15 @@ export const SignupView = () => {
 	const [password, setPassword] = useState('')
 	const [email, setEmail] = useState('')
 	const [birthday, setBirthday] = useState('')
+	const [action, setAction] = useState('Register')
+
+	//clear form after submit
+	const clearForm = () => {
+		setUsername('')
+		setPassword('')
+		setEmail('')
+		setBirthday('')
+	}
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
@@ -30,6 +39,7 @@ export const SignupView = () => {
 			.then((data) => {
 				console.log('Signup response: ', data)
 				alert('You have successfully signed up! Please log in.')
+				clearForm()
 			})
 			.catch((error) => {
 				console.error('Error:', error)
@@ -40,7 +50,7 @@ export const SignupView = () => {
 		<div className='wrapper'>
 			<Form className='shadow p-4 bg-white rounded' onSubmit={handleSubmit}>
 				<img src={logo} alt='logo' className='thumbnail mx-auto d-block mb-lg-4' />
-				<div className='title'>Register</div>
+				<div className='title'>{action}</div>
 				<Form.Group className='mb-2' controlId='formUsername'>
 					<Form.Label>
 						<FaUserAstronaut className='icon' />
@@ -64,14 +74,14 @@ export const SignupView = () => {
 				</Form.Group>
 
 				<Form.Group className='mb-2' controlId='formEmail'>
-					<Form.Label>
+					<Form.Label className='mt-2'>
 						<MdEmail className='icon' />
 						Email
 					</Form.Label>
 					<Form.Control type='email' value={email} onChange={(e) => setEmail(e.target.value)} required />
 				</Form.Group>
 				<Form.Group className='mb-2' controlId='formBirthday'>
-					<Form.Label>
+					<Form.Label className='mt-2'>
 						{' '}
 						<FaBirthdayCake className='icon' /> Birthday
 					</Form.Label>
@@ -83,8 +93,8 @@ export const SignupView = () => {
 				</Button>
 
 				<div className='d-grid justify-content-end'>
-					<Button className='text-muted px-0' variant='link' onClick={''}>
-						Login
+					<Button className='text-muted px-0' variant='link' type='submit'>
+						Register
 					</Button>
 				</div>
 			</Form>

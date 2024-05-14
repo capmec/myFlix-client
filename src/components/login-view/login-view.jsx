@@ -6,11 +6,7 @@ import { FaKey, FaUserAstronaut } from 'react-icons/fa'
 export const LoginView = ({ onLoggedIn }) => {
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
-	const [action, setAction] = useState('')
-
-	const registerLink = () => {
-		setAction('active')
-	}
+	const [action, setAction] = useState('login')
 
 	const handleSubmit = (event) => {
 		// this prevents the default behavior of the form which is to reload the entire page
@@ -45,7 +41,7 @@ export const LoginView = ({ onLoggedIn }) => {
 	}
 
 	return (
-		<div className={`wrapper${action}`}>
+		<div className='wrapper'>
 			<Form className='shadow p-4 bg-white rounded' onSubmit={handleSubmit}>
 				<img src={logo} alt='logo' className='thumbnail mx-auto d-block mb-lg-4' />
 				<div className='title'>Sign In</div>
@@ -82,7 +78,7 @@ export const LoginView = ({ onLoggedIn }) => {
 				</Button>
 
 				<div className='d-grid justify-content-end'>
-					<Button className='text-muted px-0' variant='link' onClick={registerLink}>
+					<Button className='text-muted px-0' variant='link'>
 						Register
 					</Button>
 				</div>
