@@ -3,7 +3,7 @@ import { MovieCard } from '../movie-card/movie-card'
 import { MovieView } from '../movie-view/movie-view'
 import { LoginView } from '../login-view/login-view'
 import { SignupView } from '../signup/signup-view'
-import { Col, Row } from 'react-bootstrap'
+import { Col, Row, Button } from 'react-bootstrap'
 
 export const MainView = () => {
 	const storedUser = JSON.parse(localStorage.getItem('user'))
@@ -41,13 +41,9 @@ export const MainView = () => {
 	}, [token])
 
 	return (
-		<Row>
+		<>
 			{!user ? (
-				<>
-					<LoginView onLoggedIn={(user) => setUser(user)} />
-					or
-					<SignupView />
-				</>
+				<LoginView onLoggedIn={(user) => setUser(user)} />
 			) : selectedMovie ? (
 				<Col md={8}>
 					<MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
@@ -66,8 +62,17 @@ export const MainView = () => {
 							/>
 						</Col>
 					))}
+					<Button
+						variant='primary'
+						onClick={() => {
+							setUser(null)
+							setToken(null)
+							localStorage.clear()
+						}}>
+						Logout
+					</Button>
 				</>
 			)}
-		</Row>
+		</>
 	)
 }
