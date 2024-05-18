@@ -38,7 +38,6 @@ export const SignupView = () => {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log('Signup response: ', data)
 				alert('You have successfully signed up! Please log in.')
 				clearForm()
 			})
