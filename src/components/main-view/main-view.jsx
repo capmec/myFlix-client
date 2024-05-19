@@ -3,15 +3,16 @@ import { MovieCard } from '../movie-card/movie-card'
 import { MovieView } from '../movie-view/movie-view'
 import { LoginView } from '../login-view/login-view'
 import { SignupView } from '../signup/signup-view'
-import { Col, Row, Button } from 'react-bootstrap'
+import { Col, Row } from 'react-bootstrap'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { NavigationBar } from '../navigation-bar/navigation-bar'
 
 export const MainView = () => {
 	const storedUser = JSON.parse(localStorage.getItem('user'))
 	const storedToken = localStorage.getItem('token')
-	const [movies, setMovies] = useState([])
-	const [selectedMovie, setSelectedMovie] = useState(null)
+
 	const [user, setUser] = useState(storedUser ? storedUser : null)
+	const [movies, setMovies] = useState([])
 	const [token, setToken] = useState(storedToken ? storedToken : null)
 
 	useEffect(() => {
@@ -37,12 +38,16 @@ export const MainView = () => {
 						image: movie.image,
 					}
 				})
+				localStorage.setItem('movies', JSON.stringify(moviesApi))
 				setMovies(moviesApi)
 			})
 	}, [token])
 
 	return (
 		<BrowserRouter>
+			{/* not show the navbar if !user */}
+			{user ? <NavigationBar user={user} onLoggedOut={() => setUser(null)} /> : null}
+
 			<Row className='justify-content-md-center'>
 				<Routes>
 					<Route
@@ -104,15 +109,6 @@ export const MainView = () => {
 												<MovieCard movie={movie} />
 											</Col>
 										))}
-										<Button
-											variant='primary'
-											onClick={() => {
-												setUser(null)
-												setToken(null)
-												localStorage.clear()
-											}}>
-											Logout
-										</Button>
 									</>
 								)}
 							</>

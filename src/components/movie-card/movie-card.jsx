@@ -27,5 +27,4 @@ MovieCard.propTypes = {
 		actors: PropTypes.array.isRequired,
 		image: PropTypes.string.isRequired,
 	}).isRequired,
-	onMovieClick: PropTypes.func.isRequired,
 }
