@@ -33,7 +33,7 @@ export const MainView = () => {
 						year: movie.year,
 						genre: movie.genre,
 						director: movie.director.name,
-						//how do I get the actors to display?
+						description: movie.description,
 						actors: movie.actors,
 						image: movie.image,
 					}
@@ -87,7 +87,7 @@ export const MainView = () => {
 								) : movies.length === 0 ? (
 									<Col>The list is empty!</Col>
 								) : (
-									<Col md={8}>
+									<Col>
 										<MovieView movies={movies} />
 									</Col>
 								)}
