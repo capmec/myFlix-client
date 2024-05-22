@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { MovieCard } from '../movie-card/movie-card'
 import { MovieView } from '../movie-view/movie-view'
 import { LoginView } from '../login-view/login-view'
-import { SignupView } from '../signup/signup-view'
 import { Col, Row } from 'react-bootstrap'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { NavigationBar } from '../navigation-bar/navigation-bar'
@@ -46,30 +45,25 @@ export const MainView = () => {
 	return (
 		<BrowserRouter>
 			{/* not show the navbar if !user */}
-			{user ? <NavigationBar user={user} onLoggedOut={() => setUser(null)} /> : null}
+			{user ? (
+				<NavigationBar
+					user={user}
+					onLoggedOut={() => {
+						setUser(null)
+						setToken(null)
+						localStorage.clear()
+					}}
+				/>
+			) : null}
 
 			<Row className='justify-content-md-center'>
 				<Routes>
-					<Route
-						path='/signup'
-						element={
-							<>
-								{user ? (
-									<Navigate to='/' />
-								) : (
-									<Col md={5}>
-										<SignupView />
-									</Col>
-								)}
-							</>
-						}
-					/>
 					<Route
 						path='/login'
 						element={
 							<>
 								{user ? (
-									<Navigate to='/' />
+									<Navigate to='/ ' />
 								) : (
 									<Col md={5}>
 										<LoginView onLoggedIn={(user) => setUser(user)} />
@@ -105,7 +99,7 @@ export const MainView = () => {
 								) : (
 									<>
 										{movies.map((movie) => (
-											<Col className='mb-4' key={movie.id} md={3}>
+											<Col className='mb-4' key={movie.id} md={2}>
 												<MovieCard movie={movie} />
 											</Col>
 										))}

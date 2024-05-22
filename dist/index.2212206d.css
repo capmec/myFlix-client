@@ -7409,7 +7409,6 @@ button, input, optgroup, select, textarea {
 
 .custom-container {
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -7419,7 +7418,10 @@ button, input, optgroup, select, textarea {
 }
 
 .navbar-custom {
+  color: #fff;
   background-color: #242750;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 10px;
 }
 
@@ -7444,11 +7446,11 @@ button, input, optgroup, select, textarea {
   font-size: 2rem;
 }
 
-.navbar-brand, .nav-link {
+Nav .navbar-brand, .nav-link {
   color: #fff;
 }
 
-.navbar-brand:hover, .nav-link:hover {
+Nav .navbar-brand:hover, .nav-link:hover {
   color: #d4d4d4;
 }
 
@@ -7477,6 +7479,15 @@ button, input, optgroup, select, textarea {
   justify-content: center;
   align-items: center;
   display: flex;
+}
+
+.options {
+  color: #fff;
+  background-color: #242750;
+  border: none;
+  width: 100px;
+  margin: 20px;
+  padding: auto;
 }
 
 :root, [data-bs-theme="light"] {

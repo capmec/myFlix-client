@@ -25,14 +25,14 @@ export const MovieView = ({ movies }) => {
 								<Image src={movie.image} alt={movie.title} fluid className='img-fluid' />
 							</Col>
 							<Col md={9}>
-								<h1 className='font-weight-bold'>
-									{movie.title} <small>({movie.year})</small>
+								<h1>
+									<strong>{movie.title}</strong> <small className='light-text'>({movie.year})</small>
 								</h1>
 								<div className='d-flex align-items-center mb-2'>
 									<span>{movie.genre}</span>
 								</div>
-								<h5>Overview</h5>
-								<p>{movie.description}</p>
+								<h3>Overview</h3>
+								<p className='text-justify'>{movie.description}</p>
 								<p>
 									<strong>Director:</strong> {movie.director}
 								</p>
@@ -49,7 +49,7 @@ export const MovieView = ({ movies }) => {
 			</div>
 
 			<Container className='similar_movies'>
-				<h6>Similar Movies</h6>
+				<h5 className='text-left mt-2 font-weight-bold'>Similar Movies</h5>
 				<Row>
 					{similarMovies.map((movie) => (
 						<Col key={movie.id} md={2} sm={6}>

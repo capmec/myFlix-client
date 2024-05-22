@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types'
-import { Navbar, Nav, Container, Button } from 'react-bootstrap'
+import { Navbar, Col, Container, NavDropdown, Row } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import logo from '../../../public/b.png'
+import { FaUserAstronaut } from 'react-icons/fa'
+
 import './navigation-bar.scss'
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
@@ -11,31 +13,23 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
 				<Navbar.Brand as={NavLink} to='/'>
 					<img src={logo} className='logo' alt='logo' />
 				</Navbar.Brand>
-				<Navbar.Toggle aria-controls='basic-navbar-nav' />
-				<Navbar.Collapse id='basic-navbar-nav'>
-					<Nav className='nav-links'>
-						{!user ? (
-							<>
-								<Nav.Link as={NavLink} to='/login' />
-							</>
-						) : (
-							<>
-								<Nav.Link as={NavLink} to='/'>
-									Home
-								</Nav.Link>
-								<Nav.Link as={NavLink} to='/profile'>
-									Profile
-								</Nav.Link>
-							</>
-						)}
-					</Nav>
-				</Navbar.Collapse>
 			</Container>
-			<Navbar.Collapse className='justify-content-end'>
-				<Nav>
-					<Button onClick={onLoggedOut}>Logout</Button>
-				</Nav>
-			</Navbar.Collapse>
+
+			<div className='options'>
+				<Col xs='auto'>
+					<Row>
+						<FaUserAstronaut size={36} />
+					</Row>
+					<Row>
+						<NavDropdown title='Username' id='basic-nav-dropdown'>
+							<NavDropdown.Item href='/profile'>Profile</NavDropdown.Item>
+							<NavDropdown.Item href='/login' onClick={onLoggedOut}>
+								Sign Out
+							</NavDropdown.Item>
+						</NavDropdown>
+					</Row>
+				</Col>
+			</div>
 		</Navbar>
 	)
 }
