@@ -7417,6 +7417,19 @@ button, input, optgroup, select, textarea {
   height: 20px;
 }
 
+.add_star {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.add_star p {
+  color: #fff;
+  margin: 0 0 0 20px;
+  padding: 0;
+}
+
 .navbar-custom {
   color: #fff;
   background-color: #242750;
@@ -7485,9 +7498,30 @@ Nav .navbar-brand:hover, .nav-link:hover {
   color: #fff;
   background-color: #242750;
   border: none;
-  width: 100px;
-  margin: 20px;
-  padding: auto;
+  padding: 20px;
+}
+
+.title {
+  margin: 24px 0 16px;
+}
+
+.card-body {
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+}
+
+.card-title, .card-text {
+  text-align: center;
+}
+
+.button-delete {
+  align-self: flex-end;
+}
+
+.card {
+  background-color: none !important;
+  border: none !important;
 }
 
 :root, [data-bs-theme="light"] {
