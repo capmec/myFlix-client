@@ -36,8 +36,8 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
     event.preventDefault(event)
 
     // Send updated user information to the server, endpoint /users/:username
-    //fetch(`https://cine-verse-b8832aa84c3e.herokuapp.com/users/${storedUser.UserName}`, {
-    fetch(`http://localhost:8080/users/${storedUser.username}`, {
+    fetch(`https://movie-api-o5p9.onrender.com/users/${storedUser.UserName}`, {
+      //fetch(`http://localhost:8080/users/${storedUser.username}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
       headers: {
@@ -79,8 +79,8 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
   }
 
   const handleDeleteAccount = (id) => {
-    //fetch(`https://movie-api-o5p9.onrender.com/users/${id}`, {
-    fetch(`http://localhost:8080/users/${id}`, {
+    fetch(`https://movie-api-o5p9.onrender.com/users/${id}`, {
+      //fetch(`http://localhost:8080/users/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,

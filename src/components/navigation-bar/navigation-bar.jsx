@@ -16,8 +16,8 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
     if (!token) {
       return
     }
-    //fetch('https://movie-api-o5p9.onrender.com/users', {
-    fetch('http://localhost:8080/users', {
+    fetch('https://movie-api-o5p9.onrender.com/users', {
+      //fetch('http://localhost:8080/users', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
