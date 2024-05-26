@@ -29,8 +29,8 @@ export const SignupView = () => {
       email: email,
       birthday: birthday,
     }
-    fetch('https://movie-api-o5p9.onrender.com/users', {
-      //fetch('http://localhost:8080/users', {
+    //fetch('https://movie-api-o5p9.onrender.com/users', {
+    fetch('http://localhost:8080/users', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
