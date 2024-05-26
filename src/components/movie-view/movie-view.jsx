@@ -55,40 +55,7 @@ export const MovieView = ({ movies }) => {
         if (updatedUser) {
           localStorage.setItem('user', JSON.stringify(updatedUser))
           setUser(updatedUser)
-          fetch(url, {
-            method,
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          })
-            .then((response) => {
-              console.log('Response status:', response.status)
-              if (!response.ok) {
-                throw new Error(`Failed to update favorites. Method: ${method}`)
-              }
-              return response.json()
-            })
-            .then((updatedUser) => {
-              console.log('Updated user:', updatedUser)
-              if (updatedUser && updatedUser.FavoriteMovies) {
-                localStorage.setItem('user', JSON.stringify(updatedUser))
-                setUser(updatedUser)
-                // Check if the movie is still in the user's favorites
-                const isMovieFav = updatedUser.FavoriteMovies.includes(
-                  movie._id
-                )
-                setIsFav(isMovieFav)
-              } else {
-                console.error(
-                  'Updated user or FavoriteMovies is undefined:',
-                  updatedUser
-                )
-              }
-            })
-            .catch((error) => {
-              console.error(`Error: ${error}`)
-            })
+          setIsFav(!isFav)
         }
       })
       .catch((error) => {

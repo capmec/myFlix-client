@@ -80,7 +80,7 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
 
   const handleDeleteAccount = (id) => {
     //fetch(`https://movie-api-o5p9.onrender.com/users/${id}`, {
-    fetch(`http://localhost:8080/users/${_id}`, {
+    fetch(`http://localhost:8080/users/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
