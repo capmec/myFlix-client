@@ -30,11 +30,11 @@ export const MovieView = ({ movies }) => {
   const handleToggleFavorite = () => {
     if (!movie || !user) return
 
-    const url = `http://localhost:8080/users/${user.username}/movies/${movie.id}`
-    //const url = `https://movie-api-o5p9.onrender.com/users/${user.username}/movies/${movie.id}`
+    //const url = `http://localhost:8080/users/${user.username}/movies/${movie.id}`
+    const url = `https://movie-api-o5p9.onrender.com/users/${user.username}/movies/${movie.id}`
     const method = isFav ? 'DELETE' : 'POST'
 
-    console.log(`Sending ${method} request to ${url}`)
+    //console.log(`Sending ${method} request to ${url}`)
 
     fetch(url, {
       method,
@@ -44,14 +44,14 @@ export const MovieView = ({ movies }) => {
       },
     })
       .then((response) => {
-        console.log('Response status:', response.status)
+        //console.log('Response status:', response.status)
         if (!response.ok) {
           throw new Error(`Failed to update favorites. Method: ${method}`)
         }
         return response.json()
       })
       .then((updatedUser) => {
-        console.log('Updated user:', updatedUser)
+        //console.log('Updated user:', updatedUser)
         if (updatedUser) {
           localStorage.setItem('user', JSON.stringify(updatedUser))
           setUser(updatedUser)
