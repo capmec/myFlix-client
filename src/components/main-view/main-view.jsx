@@ -33,8 +33,8 @@ export const MainView = () => {
     if (!token) {
       return
     }
-    fetch('https://movie-api-o5p9.onrender.com/movies', {
-      //fetch('http://localhost:8080/movies', {
+    //fetch('https://movie-api-o5p9.onrender.com/movies', {
+    fetch('http://localhost:8080/movies', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
