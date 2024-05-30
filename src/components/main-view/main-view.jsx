@@ -37,9 +37,16 @@ export const MainView = () => {
           actors: movie.actors,
           image: movie.image,
         }))
+
         setMovies(moviesFromApi)
       })
   }, [token])
+
+  const onLoggedOut = () => {
+    setUser(null)
+    setToken(null)
+    localStorage.clear()
+  }
 
   return (
     <BrowserRouter>
