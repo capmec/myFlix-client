@@ -10,34 +10,31 @@ import { FaUserAstronaut } from 'react-icons/fa'
 import './profile-view.scss'
 
 export const ProfileView = ({ token, user, movies, onSubmit }) => {
-  const storedUser = JSON.parse(localStorage.getItem('user'))
-
   const [username, setUsername] = useState(user.username)
   const [email, setEmail] = useState(user.email)
-  const [birthdate, setBirthdate] = useState(user.birthday)
+  const [birthday, setBirthday] = useState(user.birthday)
   const [password, setPassword] = useState('')
 
   const favoriteMovies =
     movies && user && user.FavoriteMovies
-      ? movies.filter((movie) => user.FavoriteMovies.includes(movie._id))
+      ? movies.filter((m) => user.FavoriteMovies.includes(m.title))
       : []
 
   const formData = {
-    UserName: username,
-    Email: email,
-    Password: password,
+    username: username,
+    email: email,
+    password: password,
+    birthday: birthday
+      ? new Date(birthday).toISOString().substring(0, 10)
+      : null,
   }
-
-  formData.Birthdate = birthdate
-    ? new Date(birthdate).toISOString().substring(0, 10)
-    : null
 
   const handleSubmit = (event) => {
     event.preventDefault(event)
 
     // Send updated user information to the server, endpoint /users/:username
     //fetch(`https://movie-api-o5p9.onrender.com/users/${storedUser.username}`, {
-    fetch(`http://localhost:8080/users/${storedUser.username}`, {
+    fetch(`http://localhost:8080/users/${user._id}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
       headers: {
@@ -73,14 +70,14 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
         setPassword(e.target.value)
         break
       case 'date':
-        setBirthdate(e.target.value)
+        setBirthday(e.target.value)
       default:
     }
   }
 
-  const handleDeleteAccount = (id) => {
+  const handleDeleteAccount = () => {
     //fetch(`https://movie-api-o5p9.onrender.com/users/${id}`, {
-    fetch(`http://localhost:8080/users/${id}`, {
+    fetch(`http://localhost:8080/users/${user._id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -110,7 +107,7 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
             </Row>
           </Card.Body>
           <Button
-            onClick={() => handleDeleteAccount(storedUser._id)}
+            onClick={() => handleDeleteAccount(user._id)}
             className="button-delete mt-3"
             type="submit"
             variant="outline-danger"

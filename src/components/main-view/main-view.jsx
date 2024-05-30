@@ -8,26 +8,12 @@ import { NavigationBar } from '../navigation-bar/navigation-bar'
 import { ProfileView } from '../profile-view/profile-view'
 
 export const MainView = () => {
-  const getStoredUser = () => {
-    const user = localStorage.getItem('user')
-    if (user) {
-      try {
-        return JSON.parse(user)
-      } catch (e) {
-        console.error('Error parsing user from localStorage', e)
-        return null
-      }
-    }
-    return null
-  }
+  const storedUser = JSON.parse(localStorage.getItem('user'))
+  const storedToken = localStorage.getItem('token')
 
-  const getStoredToken = () => {
-    return localStorage.getItem('token') || null
-  }
-
-  const [user, setUser] = useState(getStoredUser())
+  const [user, setUser] = useState(storedUser ? storedUser : null)
+  const [token, setToken] = useState(storedToken ? storedToken : null)
   const [movies, setMovies] = useState([])
-  const [token, setToken] = useState(getStoredToken())
 
   useEffect(() => {
     if (!token) {
@@ -40,8 +26,8 @@ export const MainView = () => {
       },
     })
       .then((response) => response.json())
-      .then((movies) => {
-        const moviesApi = movies.map((movie) => ({
+      .then((data) => {
+        const moviesFromApi = data.map((movie) => ({
           id: movie._id,
           title: movie.title,
           year: movie.year,
@@ -51,20 +37,22 @@ export const MainView = () => {
           actors: movie.actors,
           image: movie.image,
         }))
-        localStorage.setItem('movies', JSON.stringify(moviesApi))
-        setMovies(moviesApi)
+        setMovies(moviesFromApi)
       })
   }, [token])
 
-  const onLoggedOut = () => {
-    setUser(null)
-    setToken(null)
-    localStorage.clear()
-  }
-
   return (
     <BrowserRouter>
-      {user && <NavigationBar user={user} onLoggedOut={onLoggedOut} />}
+      {user && (
+        <NavigationBar
+          user={user}
+          onLoggedOut={() => {
+            setUser(null)
+            setToken(null)
+            localStorage.clear()
+          }}
+        />
+      )}
 
       <Row className="justify-content-md-center">
         <Routes>
@@ -76,9 +64,9 @@ export const MainView = () => {
               ) : (
                 <Col md={5}>
                   <LoginView
-                    onLoggedIn={(user) => {
+                    onLoggedIn={(user, token) => {
                       setUser(user)
-                      setToken(localStorage.getItem('token'))
+                      setToken(token)
                     }}
                   />
                 </Col>
