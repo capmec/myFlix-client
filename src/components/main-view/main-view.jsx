@@ -8,18 +8,32 @@ import { NavigationBar } from '../navigation-bar/navigation-bar'
 import { ProfileView } from '../profile-view/profile-view'
 
 export const MainView = () => {
-  const storedUser = JSON.parse(localStorage.getItem('user'))
-  const storedToken = localStorage.getItem('token')
+  let storedUser = null
+  let storedToken = null
 
-  const [user, setUser] = useState(storedUser ? storedUser : null)
-  const [token, setToken] = useState(storedToken ? storedToken : null)
+  // Use try-catch to catch JSON.parse errors
+  try {
+    storedUser = JSON.parse(localStorage.getItem('user'))
+  } catch (error) {
+    console.error('Error parsing storedUser:', error)
+    storedUser = null
+  }
+
+  try {
+    storedToken = localStorage.getItem('token')
+  } catch (error) {
+    console.error('Error retrieving storedToken:', error)
+    storedToken = null
+  }
+
+  const [user, setUser] = useState(storedUser)
+  const [token, setToken] = useState(storedToken)
   const [movies, setMovies] = useState([])
 
   useEffect(() => {
     if (!token) {
       return
     }
-    //fetch('https://movie-api-o5p9.onrender.com/movies', {
     fetch('http://localhost:8080/movies', {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -37,7 +51,6 @@ export const MainView = () => {
           actors: movie.actors,
           image: movie.image,
         }))
-
         setMovies(moviesFromApi)
       })
   }, [token])
@@ -53,27 +66,25 @@ export const MainView = () => {
       {user && (
         <NavigationBar
           user={user}
-          onLoggedOut={() => {
-            setUser(null)
-            setToken(null)
-            localStorage.clear()
-          }}
+          onLoggedOut={onLoggedOut}
         />
       )}
 
-      <Row className="justify-content-md-center">
+      <Row className='justify-content-md-center'>
         <Routes>
           <Route
-            path="/login"
+            path='/login'
             element={
               user ? (
-                <Navigate to="/" />
+                <Navigate to='/' />
               ) : (
                 <Col md={5}>
                   <LoginView
                     onLoggedIn={(user, token) => {
                       setUser(user)
                       setToken(token)
+                      localStorage.setItem('user', JSON.stringify(user))
+                      localStorage.setItem('token', token)
                     }}
                   />
                 </Col>
@@ -81,10 +92,13 @@ export const MainView = () => {
             }
           />
           <Route
-            path="/movies/:movieId"
+            path='/movies/:movieId'
             element={
               !user ? (
-                <Navigate to="/login" replace />
+                <Navigate
+                  to='/login'
+                  replace
+                />
               ) : movies.length === 0 ? (
                 <Col>The list is empty!</Col>
               ) : (
@@ -95,25 +109,39 @@ export const MainView = () => {
             }
           />
           <Route
-            path="/users/:userId"
+            path='/users/:userId'
             element={
               !user ? (
-                <Navigate to="/login" replace />
+                <Navigate
+                  to='/login'
+                  replace
+                />
               ) : (
-                <ProfileView user={user} />
+                <ProfileView
+                  user={user}
+                  token={token}
+                  movies={movies}
+                  onSubmit={setUser}
+                />
               )
             }
           />
           <Route
-            path="/"
+            path='/'
             element={
               !user ? (
-                <Navigate to="/login" replace />
+                <Navigate
+                  to='/login'
+                  replace
+                />
               ) : movies.length === 0 ? (
                 <Col>The list is empty!</Col>
               ) : (
                 movies.map((movie) => (
-                  <Col className="mb-4" key={movie.id} md={2}>
+                  <Col
+                    className='mb-4'
+                    key={movie.id}
+                    md={2}>
                     <MovieCard movie={movie} />
                   </Col>
                 ))
