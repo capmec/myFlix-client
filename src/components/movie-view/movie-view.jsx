@@ -17,20 +17,20 @@ export const MovieView = ({ movies }) => {
   const [token, setToken] = useState(storedToken ? storedToken : null)
   const [isFav, setIsFav] = useState(false)
 
-  const movie = movies.find((movie) => movie.id === movieId)
+  const movie = movies.find((movie) => movie._id === movieId)
 
   useEffect(() => {
     if (!movie || !user) return
 
     // Check if the movie is in the user's favorite list
-    const isFavorite = user.favoriteMovies.includes(movie.id)
+    const isFavorite = user.favoriteMovies.includes(movie._id)
     setIsFav(isFavorite)
   }, [movie, user])
 
   const handleToggleFavorite = () => {
     if (!movie || !user) return
 
-    const url = `http://localhost:8080/users/${user.username}/movies/${movie.id}`
+    const url = `http://localhost:8080/users/${user.username}/movies/${movie._id}`
     //const url = `https://movie-api-o5p9.onrender.com/users/${user.username}/movies/${movie.id}`
     const method = isFav ? 'DELETE' : 'POST'
 
@@ -70,7 +70,8 @@ export const MovieView = ({ movies }) => {
   // Find similar movies based on genre
   const similarMovies = movies.filter((m) => {
     return (
-      m.id !== movie.id && m.genre.some((genre) => movie.genre.includes(genre))
+      m._id !== movie._id &&
+      m.genre.some((genre) => movie.genre.includes(genre))
     )
   })
 

@@ -42,7 +42,7 @@ export const MainView = () => {
       .then((response) => response.json())
       .then((data) => {
         const moviesFromApi = data.map((movie) => ({
-          id: movie._id,
+          _id: movie._id, // Ensure consistent use of _id
           title: movie.title,
           year: movie.year,
           genre: movie.genre,
@@ -63,20 +63,15 @@ export const MainView = () => {
 
   return (
     <BrowserRouter>
-      {user && (
-        <NavigationBar
-          user={user}
-          onLoggedOut={onLoggedOut}
-        />
-      )}
+      {user && <NavigationBar user={user} onLoggedOut={onLoggedOut} />}
 
-      <Row className='justify-content-md-center'>
+      <Row className="justify-content-md-center">
         <Routes>
           <Route
-            path='/login'
+            path="/login"
             element={
               user ? (
-                <Navigate to='/' />
+                <Navigate to="/" />
               ) : (
                 <Col md={5}>
                   <LoginView
@@ -92,13 +87,10 @@ export const MainView = () => {
             }
           />
           <Route
-            path='/movies/:movieId'
+            path="/movies/:movieId"
             element={
               !user ? (
-                <Navigate
-                  to='/login'
-                  replace
-                />
+                <Navigate to="/login" replace />
               ) : movies.length === 0 ? (
                 <Col>The list is empty!</Col>
               ) : (
@@ -109,13 +101,10 @@ export const MainView = () => {
             }
           />
           <Route
-            path='/users/:userId'
+            path="/users/:userId"
             element={
               !user ? (
-                <Navigate
-                  to='/login'
-                  replace
-                />
+                <Navigate to="/login" replace />
               ) : (
                 <ProfileView
                   user={user}
@@ -127,24 +116,20 @@ export const MainView = () => {
             }
           />
           <Route
-            path='/'
+            path="/"
             element={
               !user ? (
-                <Navigate
-                  to='/login'
-                  replace
-                />
+                <Navigate to="/login" replace />
               ) : movies.length === 0 ? (
                 <Col>The list is empty!</Col>
               ) : (
-                movies.map((movie) => (
-                  <Col
-                    className='mb-4'
-                    key={movie.id}
-                    md={2}>
-                    <MovieCard movie={movie} />
-                  </Col>
-                ))
+                <>
+                  {movies.map((movie) => (
+                    <Col className="mb-4" key={movie._id} md={2}>
+                      <MovieCard movie={movie} />
+                    </Col>
+                  ))}
+                </>
               )
             }
           />
