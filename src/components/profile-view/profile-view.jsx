@@ -1,24 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-
-import { useEffect, useState } from 'react'
 import { FavoriteMovies } from './favorite-movies'
 import { UpdateUser } from './update-user'
-import { Card, Button, Image } from 'react-bootstrap'
+import { Card, Button } from 'react-bootstrap'
 import { FaUserAstronaut } from 'react-icons/fa'
 import './profile-view.scss'
 
-export const ProfileView = ({ token, user, movies, onSubmit }) => {
+export const ProfileView = ({ token, user, onSubmit }) => {
   const [username, setUsername] = useState(user.username)
   const [email, setEmail] = useState(user.email)
   const [birthday, setBirthday] = useState(user.birthday)
   const [password, setPassword] = useState('')
+  const [favoriteMovies, setFavoriteMovies] = useState([])
 
-  const favoriteMovies =
-    movies && user && user.FavoriteMovies
-      ? movies.filter((m) => user.FavoriteMovies.includes(m.title))
-      : []
+  useEffect(() => {
+    fetch(`http://localhost:8080/users/${user._id}/favoriteMovies`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => response.json())
+      .then((data) => setFavoriteMovies(data))
+      .catch((error) => console.error('Error fetching favorite movies:', error))
+  }, [token, user._id])
 
   const formData = {
     username: username,
@@ -30,10 +33,7 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
   }
 
   const handleSubmit = (event) => {
-    event.preventDefault(event)
-
-    // Send updated user information to the server, endpoint /users/:username
-    //fetch(`https://movie-api-o5p9.onrender.com/users/${storedUser.username}`, {
+    event.preventDefault()
     fetch(`http://localhost:8080/users/${user._id}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
@@ -42,56 +42,51 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then((response) => {
-        if (response.ok) {
-          alert('Update successful')
-          return response.json()
-        }
-        alert('Update failed')
-      })
+      .then((response) => response.json())
       .then((data) => {
         localStorage.setItem('user', JSON.stringify(data))
         onSubmit(data)
       })
-      .catch((error) => {
-        console.error(error)
-      })
+      .catch((error) => console.error('Error updating user:', error))
   }
 
   const handleUpdate = (e) => {
-    switch (e.target.type) {
+    const { type, value } = e.target
+    switch (type) {
       case 'text':
-        setUsername(e.target.value)
+        setUsername(value)
         break
       case 'email':
-        setEmail(e.target.value)
+        setEmail(value)
         break
       case 'password':
-        setPassword(e.target.value)
+        setPassword(value)
         break
       case 'date':
-        setBirthday(e.target.value)
+        setBirthday(value)
+        break
       default:
     }
   }
 
   const handleDeleteAccount = () => {
-    //fetch(`https://movie-api-o5p9.onrender.com/users/${id}`, {
     fetch(`http://localhost:8080/users/${user._id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-    }).then((response) => {
-      if (response.ok) {
-        alert('The account has been successfully deleted.')
-        localStorage.clear()
-        window.location.reload()
-      } else {
-        alert('Something went wrong.')
-      }
     })
+      .then((response) => {
+        if (response.ok) {
+          alert('The account has been successfully deleted.')
+          localStorage.clear()
+          window.location.reload()
+        } else {
+          alert('Something went wrong.')
+        }
+      })
+      .catch((error) => console.error('Error deleting account:', error))
   }
 
   return (
@@ -107,7 +102,7 @@ export const ProfileView = ({ token, user, movies, onSubmit }) => {
             </Row>
           </Card.Body>
           <Button
-            onClick={() => handleDeleteAccount(user._id)}
+            onClick={handleDeleteAccount}
             className="button-delete mt-3"
             type="submit"
             variant="outline-danger"
