@@ -9,6 +9,11 @@ export const FavoriteMovies = ({ user, favoriteMovies }) => {
   return (
     <Container className="similar_movies">
       <h5 className="text-left mt-2 font-weight-bold">Favorite Movies</h5>
+      {/* //if there are no favorite movies, display a message */}
+      {favoriteMovies.length === 0 && (
+        <p className="text-left">You have no favorite movies yet!</p>
+      )}
+
       <Row>
         {favoriteMovies.map((movie) => (
           <Col key={movie._id} md={2} sm={6}>
