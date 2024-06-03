@@ -30,8 +30,8 @@ export const MovieView = ({ movies }) => {
   const handleToggleFavorite = () => {
     if (!movie || !user) return
 
-    const url = `http://localhost:8080/users/${user.username}/movies/${movie._id}`
-    //const url = `https://movie-api-o5p9.onrender.com/users/${user.username}/movies/${movie.id}`
+    //const url = `http://localhost:8080/users/${user.username}/movies/${movie._id}`
+    const url = `https://movie-api-o5p9.onrender.com/users/${user.username}/movies/${movie._id}`
     const method = isFav ? 'DELETE' : 'POST'
 
     //console.log(`Sending ${method} request to ${url}`)

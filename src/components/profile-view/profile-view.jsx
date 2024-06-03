@@ -15,9 +15,13 @@ export const ProfileView = ({ token, user, onSubmit }) => {
   const [favoriteMovies, setFavoriteMovies] = useState([])
 
   useEffect(() => {
-    fetch(`http://localhost:8080/users/${user._id}/favoriteMovies`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    //fetch(`http://localhost:8080/users/${user._id}/favoriteMovies`, {
+    fetch(
+      `https://movie-api-o5p9.onrender.com/users/${user._id}/favoriteMovies`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         const updatedMovies = data.map((movie) => ({
@@ -40,7 +44,7 @@ export const ProfileView = ({ token, user, onSubmit }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    fetch(`http://localhost:8080/users/${user._id}`, {
+    fetch(`https://movie-api-o5p9.onrender.com/users/${user._id}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
       headers: {
@@ -76,7 +80,8 @@ export const ProfileView = ({ token, user, onSubmit }) => {
   }
 
   const handleDeleteAccount = () => {
-    fetch(`http://localhost:8080/users/${user._id}`, {
+    //fetch(`http://localhost:8080/users/${user._id}`, {
+    fetch(`https://movie-api-o5p9.onrender.com/users/${user._id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
