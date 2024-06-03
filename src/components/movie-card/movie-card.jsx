@@ -1,25 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Button, Card } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
-export const MovieCard = ({ movie, onMovieClick }) => {
-	return (
-		<div
-			onClick={() => {
-				onMovieClick(movie)
-			}}>
-			{movie.title}
-		</div>
-	)
+import './movie-card.scss'
+
+export const MovieCard = ({ movie }) => {
+  return (
+    <Card>
+      <div className="overflow">
+        <Link to={`/movies/${movie._id}`}>
+          {' '}
+          <Card.Img className="card-img-top" src={movie.image}></Card.Img>
+        </Link>
+      </div>
+    </Card>
+  )
 }
 
 MovieCard.propTypes = {
-	movie: PropTypes.shape({
-		title: PropTypes.string.isRequired,
-		description: PropTypes.string,
-		genre: PropTypes.array,
-		director: PropTypes.string,
-		actors: PropTypes.array.isRequired,
-		image: PropTypes.string.isRequired,
-	}).isRequired,
-	onMovieClick: PropTypes.func.isRequired,
+  movie: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    genre: PropTypes.array,
+    director: PropTypes.string,
+    actors: PropTypes.array.isRequired,
+    image: PropTypes.string.isRequired,
+  }).isRequired,
 }

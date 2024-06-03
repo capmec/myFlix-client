@@ -2,103 +2,141 @@ import React, { useEffect, useState } from 'react'
 import { MovieCard } from '../movie-card/movie-card'
 import { MovieView } from '../movie-view/movie-view'
 import { LoginView } from '../login-view/login-view'
-import { SignupView } from '../signup/signup-view'
+import { Col, Row } from 'react-bootstrap'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { NavigationBar } from '../navigation-bar/navigation-bar'
+import { ProfileView } from '../profile-view/profile-view'
 
 export const MainView = () => {
-	const storedUser = JSON.parse(localStorage.getItem('user'))
-	const storedToken = localStorage.getItem('token')
-	const [movies, setMovies] = useState([])
-	const [selectedMovie, setSelectedMovie] = useState(null)
-	const [user, setUser] = useState(storedUser ? storedUser : null)
-	const [token, setToken] = useState(storedToken ? storedToken : null)
+  let storedUser = null
+  let storedToken = null
 
-	useEffect(() => {
-		if (!token) {
-			return
-		}
-		fetch('https://movie-api-o5p9.onrender.com/movies', {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		})
-			.then((response) => response.json())
-			.then((movies) => {
-				const moviesApi = movies.map((movie) => {
-					return {
-						id: movie._id,
-						title: movie.title,
-						year: movie.year,
-						genre: movie.genre,
-						director: movie.director.name,
-						//how do I get the actors to display?
-						actors: movie.actors,
-						image: movie.image,
-					}
-				})
-				setMovies(moviesApi)
-			})
-	}, [token])
+  // Use try-catch to catch JSON.parse errors
+  try {
+    storedUser = JSON.parse(localStorage.getItem('user'))
+  } catch (error) {
+    console.error('Error parsing storedUser:', error)
+    storedUser = null
+  }
 
-	if (!user) {
-		return (
-			<>
-				<LoginView
-					onLoggedIn={(user, token) => {
-						setUser(user)
-						setToken(token)
-					}}
-				/>
-				or
-				<SignupView />
-			</>
-		)
-	}
+  try {
+    storedToken = localStorage.getItem('token')
+  } catch (error) {
+    console.error('Error retrieving storedToken:', error)
+    storedToken = null
+  }
 
-	if (selectedMovie) {
-		let similarMovies = movies.filter((movie) => movie.genre === selectedMovie.genre)
-		return (
-			<>
-				<MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
-				<hr />
-				<h2>Similar Movies</h2>
-				<div>
-					{similarMovies.map((movie) => (
-						<MovieCard
-							key={movie.id}
-							movie={movie}
-							onMovieClick={(newSelectedMovie) => {
-								setSelectedMovie(newSelectedMovie)
-							}}
-						/>
-					))}
-				</div>
-			</>
-		)
-	}
+  const [user, setUser] = useState(storedUser)
+  const [token, setToken] = useState(storedToken)
+  const [movies, setMovies] = useState([])
 
-	if (movies.length === 0) {
-		return <div>No MovieFound!</div>
-	}
+  useEffect(() => {
+    if (!token) {
+      return
+    }
 
-	return (
-		<div>
-			{movies.map((movie) => (
-				<MovieCard
-					key={movie.id}
-					movie={movie}
-					onMovieClick={(newSelectedMovie) => {
-						setSelectedMovie(newSelectedMovie)
-					}}
-				/>
-			))}
-			<button
-				onClick={() => {
-					setUser(null)
-					setToken(null)
-					localStorage.clear()
-				}}>
-				Logout
-			</button>
-		</div>
-	)
+    fetch('https://movie-api-o5p9.onrender.com/movies', {
+      //fetch('http://localhost:8080/movies', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const moviesFromApi = data.map((movie) => ({
+          _id: movie._id, // Ensure consistent use of _id
+          title: movie.title,
+          year: movie.year,
+          genre: movie.genre,
+          director: movie.director.name,
+          description: movie.description,
+          actors: movie.actors,
+          image: movie.image,
+        }))
+        setMovies(moviesFromApi)
+      })
+  }, [token])
+
+  const onLoggedOut = () => {
+    setUser(null)
+    setToken(null)
+    localStorage.clear()
+  }
+
+  return (
+    <BrowserRouter>
+      {user && <NavigationBar user={user} onLoggedOut={onLoggedOut} />}
+
+      <Row className="justify-content-md-center">
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              user ? (
+                <Navigate to="/" />
+              ) : (
+                <Col md={5}>
+                  <LoginView
+                    onLoggedIn={(user, token) => {
+                      setUser(user)
+                      setToken(token)
+                      localStorage.setItem('user', JSON.stringify(user))
+                      localStorage.setItem('token', token)
+                    }}
+                  />
+                </Col>
+              )
+            }
+          />
+          <Route
+            path="/movies/:movieId"
+            element={
+              !user ? (
+                <Navigate to="/login" replace />
+              ) : movies.length === 0 ? (
+                <Col>The list is empty!</Col>
+              ) : (
+                <Col>
+                  <MovieView movies={movies} />
+                </Col>
+              )
+            }
+          />
+          <Route
+            path="/users/:userId"
+            element={
+              !user ? (
+                <Navigate to="/login" replace />
+              ) : (
+                <ProfileView
+                  user={user}
+                  token={token}
+                  movies={movies}
+                  onSubmit={setUser}
+                />
+              )
+            }
+          />
+          <Route
+            path="/"
+            element={
+              !user ? (
+                <Navigate to="/login" replace />
+              ) : movies.length === 0 ? (
+                <Col>The list is empty!</Col>
+              ) : (
+                <>
+                  {movies.map((movie) => (
+                    <Col className="mb-4" key={movie._id} md={2}>
+                      <MovieCard movie={movie} />
+                    </Col>
+                  ))}
+                </>
+              )
+            }
+          />
+        </Routes>
+      </Row>
+    </BrowserRouter>
+  )
 }
