@@ -150,8 +150,8 @@ export const MainView = () => {
               ) : (
                 <>
                   <Col xs={11} md={6} className="pt-5">
-                    <div class="row">
-                      <div class="search">
+                    <div className="row">
+                      <div className="search">
                         <Form>
                           <Form.Control
                             type="search"
@@ -161,7 +161,7 @@ export const MainView = () => {
                             value={searchTerm}
                           />
                         </Form>
-                        <span class="input-group-append">
+                        <span className="input-group-append">
                           <Button type="submit" variant="outline-info">
                             Search
                           </Button>
