@@ -1,0 +1,29 @@
+.search {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  padding: 10px;
+
+  input {
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 5px 10px;
+    width: 300px;
+  }
+
+  button {
+    border-radius: 5px;
+    color: #000;
+    font-size: 16px;
+    margin-left: 10px;
+    padding: 5px 10px;
+    transition: background-color 0.5s;
+    width: 100px;
+  }
+}
+
+.no-outline:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

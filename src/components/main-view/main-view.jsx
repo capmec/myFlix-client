@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { MovieCard } from '../movie-card/movie-card'
 import { MovieView } from '../movie-view/movie-view'
 import { LoginView } from '../login-view/login-view'
-import { Col, Row } from 'react-bootstrap'
+import { Col, Row, Form, Button } from 'react-bootstrap'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { NavigationBar } from '../navigation-bar/navigation-bar'
 import { ProfileView } from '../profile-view/profile-view'
+
+import './main-view.scss'
 
 export const MainView = () => {
   let storedUser = null
@@ -30,13 +32,34 @@ export const MainView = () => {
   const [token, setToken] = useState(storedToken)
   const [movies, setMovies] = useState([])
 
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value)
+  }
+
+  const filteredMovies = movies.filter((movie) => {
+    const title = movie.title?.toLowerCase() ?? ''
+    const description = movie.description?.toLowerCase() ?? ''
+    const genreName = movie.genre?.name?.toLowerCase() ?? ''
+    const genreDescription = movie.genre?.description?.toLowerCase() ?? ''
+    const director = movie.director?.toLowerCase() ?? ''
+
+    return (
+      title.includes(searchTerm.toLowerCase()) ||
+      description.includes(searchTerm.toLowerCase()) ||
+      genreName.includes(searchTerm.toLowerCase()) ||
+      genreDescription.includes(searchTerm.toLowerCase()) ||
+      director.includes(searchTerm.toLowerCase())
+    )
+  })
+
   useEffect(() => {
     if (!token) {
       return
     }
 
     fetch('https://movie-api-o5p9.onrender.com/movies', {
-      //fetch('http://localhost:8080/movies', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -44,11 +67,11 @@ export const MainView = () => {
       .then((response) => response.json())
       .then((data) => {
         const moviesFromApi = data.map((movie) => ({
-          _id: movie._id, // Ensure consistent use of _id
+          _id: movie._id,
           title: movie.title,
           year: movie.year,
           genre: movie.genre,
-          director: movie.director.name,
+          director: movie.director.name, // Ensure director is a string
           description: movie.description,
           actors: movie.actors,
           image: movie.image,
@@ -126,11 +149,45 @@ export const MainView = () => {
                 <Col>The list is empty!</Col>
               ) : (
                 <>
-                  {movies.map((movie) => (
-                    <Col className="mb-4" key={movie._id} md={2}>
-                      <MovieCard movie={movie} />
-                    </Col>
-                  ))}
+                  <Col xs={11} md={6} className="pt-5">
+                    <div class="row">
+                      <div class="search">
+                        <Form>
+                          <Form.Control
+                            type="search"
+                            placeholder="Search"
+                            className="mr-sm-2 no-outline"
+                            onChange={handleSearch}
+                            value={searchTerm}
+                          />
+                        </Form>
+                        <span class="input-group-append">
+                          <Button type="submit" variant="outline-info">
+                            Search
+                          </Button>
+                        </span>
+                      </div>
+                    </div>
+                  </Col>
+                  <Col md={12} className="pt-5"></Col>
+                  {searchTerm && filteredMovies.length > 0
+                    ? filteredMovies.map((movie) => (
+                        <Col
+                          className="mb-4"
+                          key={movie._id}
+                          xs={11}
+                          sm={6}
+                          md={4}
+                          lg={3}
+                        >
+                          <MovieCard movie={movie} />
+                        </Col>
+                      ))
+                    : movies.map((movie) => (
+                        <Col className="mb-4" key={movie._id} md={2}>
+                          <MovieCard movie={movie} />
+                        </Col>
+                      ))}
                 </>
               )
             }
