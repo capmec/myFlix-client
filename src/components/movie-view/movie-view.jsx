@@ -129,11 +129,11 @@ export const MovieView = ({ movies }) => {
         </div>
       </div>
 
-      <Container className="similar_movies">
+      <Container>
         <h5 className="text-left mt-2 font-weight-bold">Similar Movies</h5>
         <Row>
           {similarMovies.map((movie) => (
-            <Col key={movie.id} md={2} sm={6}>
+            <Col key={movie._id} md={2} sm={6}>
               <MovieCard className="movie-thumbnail" movie={movie} />
             </Col>
           ))}

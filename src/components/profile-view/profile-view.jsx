@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { FavoriteMovies } from './favorite-movies'
 import { UpdateUser } from './update-user'
-import { Card, Button } from 'react-bootstrap'
+import { Card, Button, Container } from 'react-bootstrap'
 import { FaUserAstronaut } from 'react-icons/fa'
 import './profile-view.scss'
 
@@ -19,9 +19,15 @@ export const ProfileView = ({ token, user, onSubmit }) => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
-      .then((data) => setFavoriteMovies(data))
-      .catch((error) => console.error('Error fetching favorite movies:', error))
-  }, [token, user._id])
+      .then((data) => {
+        const updatedMovies = data.map((movie) => ({
+          ...movie,
+          director: String(movie.director),
+        }))
+        setFavoriteMovies(updatedMovies)
+      })
+      .catch((error) => console.error('Error:', error))
+  }, [user._id, token])
 
   const formData = {
     username: username,
@@ -91,38 +97,46 @@ export const ProfileView = ({ token, user, onSubmit }) => {
 
   return (
     <>
-      <Row>
-        <Card>
-          <Card.Body className="d-flex justify-content-center align-items-center">
+      <Card>
+        <Card.Body>
+          <div className="header_profile">
             <Row>
-              <Col className="d-flex align-items-baseline mt-8">
+              <Col className="hello_header">
                 <FaUserAstronaut className="p-8" size={80} />
                 <h2> Hello {user.username}! </h2>
               </Col>
             </Row>
-          </Card.Body>
-          <Button
-            onClick={handleDeleteAccount}
-            className="button-delete mt-3"
-            type="submit"
-            variant="outline-danger"
-          >
-            Delete account
-          </Button>
-        </Card>
-        <Col>
-          <UpdateUser
-            formData={formData}
-            handleUpdate={handleUpdate}
-            handleSubmit={handleSubmit}
-          />
-        </Col>
-        <br />
-      </Row>
-      <hr />
-      <Row className="justify-content-center">
-        <FavoriteMovies user={user} favoriteMovies={favoriteMovies} />
-      </Row>
+          </div>
+        </Card.Body>
+        <Button
+          onClick={handleDeleteAccount}
+          className="button-delete mt-3"
+          type="submit"
+          variant="outline-danger"
+        >
+          Delete account
+        </Button>
+      </Card>
+
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            <UpdateUser
+              formData={formData}
+              handleUpdate={handleUpdate}
+              handleSubmit={handleSubmit}
+            />
+          </div>
+          <div className="col">
+            <FavoriteMovies user={user} favoriteMovies={favoriteMovies} />
+          </div>
+        </div>
+      </div>
+      {/* <Col>
+
+      </Col>
+
+       */}
     </>
   )
 }

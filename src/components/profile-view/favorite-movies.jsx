@@ -16,7 +16,7 @@ export const FavoriteMovies = ({ user, favoriteMovies }) => {
 
       <Row>
         {favoriteMovies.map((movie) => (
-          <Col key={movie._id} md={2} sm={6}>
+          <Col key={movie._id} md={4}>
             <MovieCard
               key={movie._id}
               isFavorite={
@@ -41,7 +41,7 @@ FavoriteMovies.propTypes = {
       title: PropTypes.string.isRequired,
       description: PropTypes.string,
       genre: PropTypes.array,
-      director: PropTypes.string,
+      director: PropTypes.string.isRequired,
       actors: PropTypes.array.isRequired,
       image: PropTypes.string.isRequired,
     })

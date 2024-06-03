@@ -7,7 +7,7 @@ import './movie-card.scss'
 
 export const MovieCard = ({ movie }) => {
   return (
-    <Card className="card text-center bg-dark animate__animated animate__fadeInUp">
+    <Card>
       <div className="overflow">
         <Link to={`/movies/${movie._id}`}>
           {' '}
