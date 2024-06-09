@@ -1,6 +1,6 @@
 import React, { act, useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
-import logo from '../../../public/logo.png'
+import logo from '../signup/logo.png'
 import { FaKey, FaUserAstronaut } from 'react-icons/fa'
 import { SignupView } from '../signup/signup-view'
 

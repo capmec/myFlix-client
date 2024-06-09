@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Navbar, Col, Container, NavDropdown, Row } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
-import logo from '../../../public/b.png'
+import logo from './B.png'
 import { FaUserAstronaut } from 'react-icons/fa'
 
 import './navigation-bar.scss'

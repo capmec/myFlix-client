@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
-import logo from '../../../public/logo.png'
+import logo from './logo.png'
 import { FaKey, FaUserAstronaut, FaBirthdayCake } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 import { LoginView } from '../login-view/login-view'
