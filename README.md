@@ -12,7 +12,7 @@ Welcome to MyFlix, a MERN stack application that allows users to explore a colle
 
 ## Access
 
-You can access the MyFlix app at [https://bflixb.netlify.app/login](https://bflixb.netlify.app/login).
+You can access the MyFlix app at [https://bflixb.netlify.app](https://bflixb.netlify.app).
 
 ## Technical Requirements
 
