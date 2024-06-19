@@ -59,7 +59,8 @@ export const MainView = () => {
       return
     }
 
-    fetch('https://movie-api-o5p9.onrender.com/movies', {
+    //fetch('https://movie-api-o5p9.onrender.com/movies', {
+    fetch('http://localhost:8080/movies', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -90,13 +91,13 @@ export const MainView = () => {
     <BrowserRouter>
       {user && <NavigationBar user={user} onLoggedOut={onLoggedOut} />}
 
-      <Row className="justify-content-md-center">
+      <Row className='justify-content-md-center'>
         <Routes>
           <Route
-            path="/login"
+            path='/login'
             element={
               user ? (
-                <Navigate to="/" />
+                <Navigate to='/' />
               ) : (
                 <Col md={5}>
                   <LoginView
@@ -112,10 +113,10 @@ export const MainView = () => {
             }
           />
           <Route
-            path="/movies/:movieId"
+            path='/movies/:movieId'
             element={
               !user ? (
-                <Navigate to="/login" replace />
+                <Navigate to='/login' replace />
               ) : movies.length === 0 ? (
                 <Col>The list is empty!</Col>
               ) : (
@@ -126,10 +127,10 @@ export const MainView = () => {
             }
           />
           <Route
-            path="/users/:userId"
+            path='/users/:userId'
             element={
               !user ? (
-                <Navigate to="/login" replace />
+                <Navigate to='/login' replace />
               ) : (
                 <ProfileView
                   user={user}
@@ -141,39 +142,39 @@ export const MainView = () => {
             }
           />
           <Route
-            path="/"
+            path='/'
             element={
               !user ? (
-                <Navigate to="/login" replace />
+                <Navigate to='/login' replace />
               ) : movies.length === 0 ? (
                 <Col>The list is empty!</Col>
               ) : (
                 <>
-                  <Col xs={11} md={6} className="pt-5">
-                    <div className="row">
-                      <div className="search">
+                  <Col xs={11} md={6} className='pt-5'>
+                    <div className='row'>
+                      <div className='search'>
                         <Form>
                           <Form.Control
-                            type="search"
-                            placeholder="Search"
-                            className="mr-sm-2 no-outline"
+                            type='search'
+                            placeholder='Search'
+                            className='mr-sm-2 no-outline'
                             onChange={handleSearch}
                             value={searchTerm}
                           />
                         </Form>
-                        <span className="input-group-append">
-                          <Button type="submit" variant="outline-info">
+                        <span className='input-group-append'>
+                          <Button type='submit' variant='outline-info'>
                             Search
                           </Button>
                         </span>
                       </div>
                     </div>
                   </Col>
-                  <Col md={12} className="pt-5"></Col>
+                  <Col md={12} className='pt-5'></Col>
                   {searchTerm && filteredMovies.length > 0
                     ? filteredMovies.map((movie) => (
                         <Col
-                          className="mb-4"
+                          className='mb-4'
                           key={movie._id}
                           xs={11}
                           sm={6}
@@ -184,7 +185,7 @@ export const MainView = () => {
                         </Col>
                       ))
                     : movies.map((movie) => (
-                        <Col className="mb-4" key={movie._id} md={2}>
+                        <Col className='mb-4' key={movie._id} md={2}>
                           <MovieCard movie={movie} />
                         </Col>
                       ))}

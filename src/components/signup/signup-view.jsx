@@ -29,8 +29,8 @@ export const SignupView = () => {
       email: email,
       birthday: birthday,
     }
-    fetch('https://movie-api-o5p9.onrender.com/users', {
-      //fetch('http://localhost:8080/users', {
+    //fetch('https://movie-api-o5p9.onrender.com/users', {
+    fetch('http://localhost:8080/users', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,76 +50,76 @@ export const SignupView = () => {
   }
 
   return (
-    <div className="wrapper">
+    <div className='wrapper'>
       {action === 'Register' ? (
-        <Form className="shadow p-4 bg-white rounded" onSubmit={handleSubmit}>
+        <Form className='shadow p-4 bg-white rounded' onSubmit={handleSubmit}>
           <img
             src={logo}
-            alt="logo"
-            className="thumbnail mx-auto d-block mb-lg-4"
+            alt='logo'
+            className='thumbnail mx-auto d-block mb-lg-4'
           />
-          <div className="title">{action}</div>
-          <Form.Group className="mb-2" controlId="formUsername">
+          <div className='title'>{action}</div>
+          <Form.Group className='mb-2' controlId='formUsername'>
             <Form.Label>
-              <FaUserAstronaut className="icon" />
+              <FaUserAstronaut className='icon' />
               Username
             </Form.Label>
             <Form.Control
-              type="text"
+              type='text'
               minLength={3}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
             />
           </Form.Group>
-          <Form.Group className="mb-2" controlId="formPassword">
+          <Form.Group className='mb-2' controlId='formPassword'>
             <Form.Label>
               {' '}
-              <FaKey className="icon" />
+              <FaKey className='icon' />
               Password
             </Form.Label>
             <Form.Control
-              type="password"
+              type='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </Form.Group>
 
-          <Form.Group className="mb-2" controlId="formEmail">
-            <Form.Label className="mt-2">
-              <MdEmail className="icon" />
+          <Form.Group className='mb-2' controlId='formEmail'>
+            <Form.Label className='mt-2'>
+              <MdEmail className='icon' />
               Email
             </Form.Label>
             <Form.Control
-              type="email"
+              type='email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </Form.Group>
-          <Form.Group className="mb-2" controlId="formBirthday">
-            <Form.Label className="mt-2">
+          <Form.Group className='mb-2' controlId='formBirthday'>
+            <Form.Label className='mt-2'>
               {' '}
-              <FaBirthdayCake className="icon" /> Birthday
+              <FaBirthdayCake className='icon' /> Birthday
             </Form.Label>
             <Form.Control
-              type="date"
+              type='date'
               value={birthday}
               onChange={(e) => setBirthday(e.target.value)}
               required
             />
           </Form.Group>
 
-          <Button className="w-100" variant="primary" type="submit">
+          <Button className='w-100' variant='primary' type='submit'>
             Register
           </Button>
 
-          <div className="d-grid justify-content-end">
+          <div className='d-grid justify-content-end'>
             {/* when the button is clicked show the <LoginView/> */}
             <Button
-              className="text-muted px-0"
-              variant="link"
+              className='text-muted px-0'
+              variant='link'
               onClick={() => setAction('Login')}
             >
               Login

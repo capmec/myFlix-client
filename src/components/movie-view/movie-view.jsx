@@ -30,8 +30,8 @@ export const MovieView = ({ movies }) => {
   const handleToggleFavorite = () => {
     if (!movie || !user) return
 
-    //const url = `http://localhost:8080/users/${user.username}/movies/${movie._id}`
-    const url = `https://movie-api-o5p9.onrender.com/users/${user.username}/movies/${movie._id}`
+    const url = `http://localhost:8080/users/${user.username}/movies/${movie._id}`
+    //const url = `https://movie-api-o5p9.onrender.com/users/${user.username}/movies/${movie._id}`
     const method = isFav ? 'DELETE' : 'POST'
 
     //console.log(`Sending ${method} request to ${url}`)
@@ -78,33 +78,33 @@ export const MovieView = ({ movies }) => {
   return (
     <>
       <div
-        className="header"
+        className='header'
         style={{ backgroundImage: `url(${movie.image})` }}
       >
-        <div className="header-content">
-          <Container className="custom-container">
+        <div className='header-content'>
+          <Container className='custom-container'>
             <Row>
               <Col
                 md={3}
-                className="d-flex justify-content-center align-items-center"
+                className='d-flex justify-content-center align-items-center'
               >
                 <Image
                   src={movie.image}
                   alt={movie.title}
                   fluid
-                  className="img-fluid"
+                  className='img-fluid'
                 />
               </Col>
               <Col md={9}>
                 <h1>
                   <strong>{movie.title}</strong>{' '}
-                  <small className="light-text">({movie.year})</small>
+                  <small className='light-text'>({movie.year})</small>
                 </h1>
-                <div className="d-flex align-items-center mb-2">
+                <div className='d-flex align-items-center mb-2'>
                   <span>{movie.genre.join(', ')}</span>
                 </div>
                 <h3>Overview</h3>
-                <p className="text-justify">{movie.description}</p>
+                <p className='text-justify'>{movie.description}</p>
                 <p>
                   <strong>Director:</strong> {movie.director}
                 </p>
@@ -112,9 +112,9 @@ export const MovieView = ({ movies }) => {
                   <strong>Actors:</strong> {movie.actors.join(', ')}
                 </p>
                 <Link to={`/`}>
-                  <button className="back-button">Back</button>
+                  <button className='back-button'>Back</button>
                 </Link>
-                <div className="add_star">
+                <div className='add_star'>
                   <FaStar
                     size={20}
                     color={isFav ? 'yellow' : 'white'}
@@ -130,11 +130,11 @@ export const MovieView = ({ movies }) => {
       </div>
 
       <Container>
-        <h5 className="text-left mt-2 font-weight-bold">Similar Movies</h5>
+        <h5 className='text-left mt-2 font-weight-bold'>Similar Movies</h5>
         <Row>
           {similarMovies.map((movie) => (
             <Col key={movie._id} md={2} sm={6}>
-              <MovieCard className="movie-thumbnail" movie={movie} />
+              <MovieCard className='movie-thumbnail' movie={movie} />
             </Col>
           ))}
         </Row>

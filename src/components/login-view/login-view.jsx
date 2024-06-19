@@ -17,8 +17,8 @@ export const LoginView = ({ onLoggedIn }) => {
       username: username,
       password: password,
     }
-    fetch('https://movie-api-o5p9.onrender.com/login', {
-      //fetch('http://localhost:8080/login', {
+    //fetch('https://movie-api-o5p9.onrender.com/login', {
+    fetch('http://localhost:8080/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -41,22 +41,22 @@ export const LoginView = ({ onLoggedIn }) => {
   }
 
   return (
-    <div className="wrapper">
+    <div className='wrapper'>
       {action === 'Login' ? (
-        <Form className="shadow p-4 bg-white rounded" onSubmit={handleSubmit}>
+        <Form className='shadow p-4 bg-white rounded' onSubmit={handleSubmit}>
           <img
             src={logo}
-            alt="logo"
-            className="thumbnail mx-auto d-block mb-lg-4"
+            alt='logo'
+            className='thumbnail mx-auto d-block mb-lg-4'
           />
-          <div className="title">{action}</div>
-          <Form.Group className="mb-2" controlId="formUsername">
+          <div className='title'>{action}</div>
+          <Form.Group className='mb-2' controlId='formUsername'>
             <Form.Label>
-              <FaUserAstronaut className="icon" /> Username
+              <FaUserAstronaut className='icon' /> Username
             </Form.Label>
             <Form.Control
-              placeholder="Enter username"
-              type="text"
+              placeholder='Enter username'
+              type='text'
               minLength={3}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -64,28 +64,28 @@ export const LoginView = ({ onLoggedIn }) => {
             />
           </Form.Group>
 
-          <Form.Group className="mb-2" controlId="formPassword">
+          <Form.Group className='mb-2' controlId='formPassword'>
             <Form.Label>
-              <FaKey className="icon" />
+              <FaKey className='icon' />
               Password
             </Form.Label>
             <Form.Control
-              placeholder="Enter password"
-              type="password"
+              placeholder='Enter password'
+              type='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </Form.Group>
 
-          <Button className="w-100" variant="primary" type="submit">
+          <Button className='w-100' variant='primary' type='submit'>
             Login
           </Button>
 
-          <div className="d-grid justify-content-end">
+          <div className='d-grid justify-content-end'>
             <Button
-              className="text-muted px-0"
-              variant="link"
+              className='text-muted px-0'
+              variant='link'
               onClick={() => setAction('Register')}
             >
               Register
