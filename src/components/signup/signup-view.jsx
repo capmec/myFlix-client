@@ -20,6 +20,10 @@ export const SignupView = () => {
     setBirthday('')
   }
 
+  const refreshPage = () => {
+    window.location.reload()
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
 
@@ -41,8 +45,7 @@ export const SignupView = () => {
       .then((data) => {
         alert('You have successfully signed up! Please log in.')
         clearForm()
-        //redirect to login
-        setAction('Login')
+        refreshPage()
       })
       .catch((error) => {
         console.error('Error:', error)
