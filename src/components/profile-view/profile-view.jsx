@@ -45,6 +45,7 @@ export const ProfileView = ({ token, user, onSubmit }) => {
   const handleSubmit = (event) => {
     event.preventDefault()
     fetch(`https://movie-api-o5p9.onrender.com/users/${user._id}`, {
+      //fetch(`http://localhost:8080/users/${user._id}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
       headers: {
@@ -104,10 +105,10 @@ export const ProfileView = ({ token, user, onSubmit }) => {
     <>
       <Card>
         <Card.Body>
-          <div className="header_profile">
+          <div className='header_profile'>
             <Row>
-              <Col className="hello_header">
-                <FaUserAstronaut className="p-8" size={80} />
+              <Col className='hello_header'>
+                <FaUserAstronaut className='p-8' size={80} />
                 <h2> Hello {user.username}! </h2>
               </Col>
             </Row>
@@ -115,24 +116,24 @@ export const ProfileView = ({ token, user, onSubmit }) => {
         </Card.Body>
         <Button
           onClick={handleDeleteAccount}
-          className="button-delete mt-3"
-          type="submit"
-          variant="outline-danger"
+          className='button-delete mt-3'
+          type='submit'
+          variant='outline-danger'
         >
           Delete account
         </Button>
       </Card>
 
-      <div className="container">
-        <div className="row">
-          <div className="col">
+      <div className='container'>
+        <div className='row'>
+          <div className='col'>
             <UpdateUser
               formData={formData}
               handleUpdate={handleUpdate}
               handleSubmit={handleSubmit}
             />
           </div>
-          <div className="col">
+          <div className='col'>
             <FavoriteMovies user={user} favoriteMovies={favoriteMovies} />
           </div>
         </div>
