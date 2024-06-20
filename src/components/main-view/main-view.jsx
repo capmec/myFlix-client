@@ -55,24 +55,22 @@ export const MainView = () => {
     )
   })
 
+  // Function to check if the token is expired
+  const isTokenExpired = (token) => {
+    if (!token) {
+      return true
+    }
+    const decodedToken = jwtDecode(token)
+    const currentTime = Date.now() / 1000 // Convert to seconds
+    return decodedToken.exp < currentTime
+  }
+
   useEffect(() => {
-    // Function to check if the token is expired
-    const isTokenExpired = (token) => {
-      if (!token) {
-        return true
-      }
-      const decodedToken = jwtDecode(token)
-      const currentTime = Date.now() / 1000 // Convert to seconds
-      return decodedToken.exp < currentTime
-    }
-
-    // Check if the token has expired before making the API call
-    if (isTokenExpired(token)) {
+    if (!token || isTokenExpired(token)) {
       onLoggedOut()
-      return // Prevent further execution
+      return
     }
 
-    //fetch('https://movie-api-o5p9.onrender.com/movies', {
     fetch('http://localhost:8080/movies', {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -102,14 +100,18 @@ export const MainView = () => {
 
   return (
     <BrowserRouter>
-      {user && <NavigationBar user={user} onLoggedOut={onLoggedOut} />}
+      {user || token ? (
+        <NavigationBar user={user} onLoggedOut={onLoggedOut} />
+      ) : (
+        <Navigate to='/login' replace />
+      )}
 
       <Row className='justify-content-md-center'>
         <Routes>
           <Route
             path='/login'
             element={
-              user ? (
+              user || token ? (
                 <Navigate to='/' />
               ) : (
                 <Col md={5}>
@@ -126,7 +128,7 @@ export const MainView = () => {
           <Route
             path='/movies/:movieId'
             element={
-              !user ? (
+              !user || !token ? (
                 <Navigate to='/login' replace />
               ) : movies.length === 0 ? (
                 <Col>The list is empty!</Col>
@@ -140,7 +142,7 @@ export const MainView = () => {
           <Route
             path='/users/:userId'
             element={
-              !user ? (
+              !user || !token ? (
                 <Navigate to='/login' replace />
               ) : (
                 <ProfileView
@@ -155,7 +157,7 @@ export const MainView = () => {
           <Route
             path='/'
             element={
-              !user ? (
+              !user || !token ? (
                 <Navigate to='/login' replace />
               ) : movies.length === 0 ? (
                 <Col>The list is empty!</Col>
