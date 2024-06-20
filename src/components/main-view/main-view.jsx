@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { jwtDecode } from 'jwt-decode'
 import { MovieCard } from '../movie-card/movie-card'
 import { MovieView } from '../movie-view/movie-view'
 import { LoginView } from '../login-view/login-view'
@@ -55,8 +56,20 @@ export const MainView = () => {
   })
 
   useEffect(() => {
-    if (!token) {
-      return
+    // Function to check if the token is expired
+    const isTokenExpired = (token) => {
+      if (!token) {
+        return true
+      }
+      const decodedToken = jwtDecode(token)
+      const currentTime = Date.now() / 1000 // Convert to seconds
+      return decodedToken.exp < currentTime
+    }
+
+    // Check if the token has expired before making the API call
+    if (isTokenExpired(token)) {
+      onLoggedOut()
+      return // Prevent further execution
     }
 
     //fetch('https://movie-api-o5p9.onrender.com/movies', {
