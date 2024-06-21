@@ -28,7 +28,7 @@ export const MovieView = ({ movies }) => {
   }, [movie, user])
 
   const handleToggleFavorite = () => {
-    if (!movie || !user) return
+    if (!movie || !user || !token) return
 
     const url = `http://localhost:8080/users/${user.username}/movies/${movie._id}`
     //const url = `https://movie-api-o5p9.onrender.com/users/${user.username}/movies/${movie._id}`
