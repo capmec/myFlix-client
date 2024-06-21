@@ -48,7 +48,7 @@ export const SignupView = () => {
         refreshPage()
       })
       .catch((error) => {
-        console.error('Error:', error)
+        alert('Error: This user already exists', error)
       })
   }
 
@@ -123,7 +123,7 @@ export const SignupView = () => {
             <Button
               className='text-muted px-0'
               variant='link'
-              onClick={() => setAction('Login')}
+              onClick={() => refreshPage()}
             >
               Login
             </Button>
