@@ -100,18 +100,14 @@ export const MainView = () => {
 
   return (
     <BrowserRouter>
-      {user || token ? (
-        <NavigationBar user={user} onLoggedOut={onLoggedOut} />
-      ) : (
-        <Navigate to='/login' replace />
-      )}
+      {user && <NavigationBar user={user} onLoggedOut={onLoggedOut} />}
 
       <Row className='justify-content-md-center'>
         <Routes>
           <Route
             path='/login'
             element={
-              user || token ? (
+              user ? (
                 <Navigate to='/' />
               ) : (
                 <Col md={5}>
@@ -128,7 +124,7 @@ export const MainView = () => {
           <Route
             path='/movies/:movieId'
             element={
-              !user || !token ? (
+              !user ? (
                 <Navigate to='/login' replace />
               ) : movies.length === 0 ? (
                 <Col>The list is empty!</Col>
@@ -142,7 +138,7 @@ export const MainView = () => {
           <Route
             path='/users/:userId'
             element={
-              !user || !token ? (
+              !user ? (
                 <Navigate to='/login' replace />
               ) : (
                 <ProfileView
@@ -157,7 +153,7 @@ export const MainView = () => {
           <Route
             path='/'
             element={
-              !user || !token ? (
+              !user ? (
                 <Navigate to='/login' replace />
               ) : movies.length === 0 ? (
                 <Col>The list is empty!</Col>

@@ -12,8 +12,8 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
   const navigate = useNavigate()
 
   // Function to check if the token is expired
-  const isTokenExpired = (token) => {
-    if (!token) {
+  const isTokenExpired = (token, user) => {
+    if (!token || !user) {
       return true
     }
     const decodedToken = jwtDecode(token)
@@ -23,7 +23,9 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
 
   const handleNavigation = (path) => {
     const token = localStorage.getItem('token')
-    if (isTokenExpired(token)) {
+    const user = JSON.parse(localStorage.getItem('user'))
+
+    if (isTokenExpired(token, user)) {
       onLoggedOut()
       navigate('/login')
     } else {
