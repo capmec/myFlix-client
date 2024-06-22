@@ -20,7 +20,7 @@ export const MovieView = ({ movies }) => {
   const movie = movies.find((movie) => movie._id === movieId)
 
   useEffect(() => {
-    if (!movie || !user) return
+    if (!movie || !user || !token) return
 
     // Check if the movie is in the user's favorite list
     const isFavorite = user.favoriteMovies.includes(movie._id)
@@ -28,7 +28,7 @@ export const MovieView = ({ movies }) => {
   }, [movie, user])
 
   const handleToggleFavorite = () => {
-    if (!movie || !user) return
+    if (!movie || !user || !token) return
 
     //const url = `http://localhost:8080/users/${user.username}/movies/${movie._id}`
     const url = `https://movie-api-o5p9.onrender.com/users/${user.username}/movies/${movie._id}`
