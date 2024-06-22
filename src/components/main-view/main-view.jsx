@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { jwtDecode } from 'jwt-decode'
 import { MovieCard } from '../movie-card/movie-card'
 import { MovieView } from '../movie-view/movie-view'
 import { LoginView } from '../login-view/login-view'
@@ -54,8 +55,19 @@ export const MainView = () => {
     )
   })
 
-  useEffect(() => {
+  // Function to check if the token is expired
+  const isTokenExpired = (token) => {
     if (!token) {
+      return true
+    }
+    const decodedToken = jwtDecode(token)
+    const currentTime = Date.now() / 1000 // Convert to seconds
+    return decodedToken.exp < currentTime
+  }
+
+  useEffect(() => {
+    if (!token || isTokenExpired(token)) {
+      onLoggedOut()
       return
     }
 

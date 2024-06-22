@@ -8,10 +8,10 @@ import './movie-card.scss'
 export const MovieCard = ({ movie }) => {
   return (
     <Card>
-      <div className="overflow">
+      <div className='overflow'>
         <Link to={`/movies/${movie._id}`}>
           {' '}
-          <Card.Img className="card-img-top" src={movie.image}></Card.Img>
+          <Card.Img className='card-img-top' src={movie.image}></Card.Img>
         </Link>
       </div>
     </Card>
